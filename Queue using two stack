@@ -1,0 +1,38 @@
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+
+class QueueUsingTwoStacks:
+    def __init__(self):
+        self.stack1 = []  
+        self.stack2 = [] 
+    def enqueue(self, x):
+        self.stack1.append(x)
+    def dequeue(self):
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        if self.stack2:
+            return self.stack2.pop()
+        return None   
+    def print_front(self):
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        if self.stack2:
+            print(self.stack2[-1])
+def process_queries(queries):
+    queue = QueueUsingTwoStacks()
+    for query in queries:
+        if query[0] == 1:
+            queue.enqueue(query[1])
+        elif query[0] == 2:
+            queue.dequeue()
+        elif query[0] == 3:
+            queue.print_front()
+
+if __name__ == '__main__':
+    n = int(input())  
+    queries = []
+    for _ in range(n):
+        query = list(map(int, input().split()))
+        queries.append(query)
+    process_queries(queries)
